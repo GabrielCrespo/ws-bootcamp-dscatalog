@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.gabriel.dscatalog.dto.CategoryDTO;
 import com.gabriel.dscatalog.entities.Category;
 import com.gabriel.dscatalog.repositories.CategoryRepository;
+import com.gabriel.dscatalog.services.exceptions.EntityNotFoundException;
 
 @Service
 public class CategoryService {
@@ -26,7 +27,7 @@ public class CategoryService {
 
 	public CategoryDTO findById(Long id) {
 		Optional<Category> obj =  repository.findById(id);
-		Category entity = obj.get();
+		Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Category not found"));
 		return new CategoryDTO(entity);
 	}
 	
